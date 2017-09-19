@@ -1,0 +1,34 @@
+  #
+  # Learn more here: https://docs.fastlane.tools/getting-started/ios/beta-deployment/
+  #             and: https://docs.fastlane.tools/getting-started/android/beta-deployment/
+  #
+
+  default_platform :ios
+  lane :beta do |values|
+    # Fabric generated this lane for deployment to Crashlytics Beta
+    # set 'export_method' to 'ad-hoc' if your Crashlytics Beta distribution uses ad-hoc provisioning
+
+    increment_build_number(
+      xcodeproj: “./Toor.xcodeproj"
+    )
+    gym(scheme: 'Toor', export_method: 'ad-hoc')
+
+    emails = values[:test_email] ? values[:test_email] : ['david@utilitynyc.com', 'nick@utilitynyc.com', 'Derek@utilitynyc.com', 'Adam@utilitynyc.com'] # You can list more emails here
+    groups = values[:test_email] ? nil : nil # You can define groups on the web and reference them here
+
+    crashlytics(api_token: 'c4a705a0be4b8aaf68a8801fea6ff5c8be3b1b44',
+             build_secret: '8be6b549913fc66da6ac27eda90d02c6eb65adb8dc08127aa006dd8eabfe5bdb',
+                   emails: emails,
+                   groups: groups,
+                    notes: 'Distributed with fastlane', # Check out the changelog_from_git_commits action
+            notifications: true) # Should this distribution notify your testers via email?
+
+    # for all available options run `fastlane action crashlytics`
+
+    # You can notify your team in chat that a beta build has been uploaded
+    # slack(
+    #   slack_url: “https://hooks.slack.com/services/utility-nyc"
+    #   channel: “toor-dev”,
+    #   message: "Successfully uploaded a beta release - see it at https://fabric.io/_/beta"
+    # )
+  end

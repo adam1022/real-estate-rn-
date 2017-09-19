@@ -1,0 +1,22 @@
+Added:
+
+Loading overlay for certain server processing events:
+
+- Login
+- Confirm Edit/Save House
+
+Need to discuss this, though.
+
+------
+
+I. Ready for QA (not including anything mentioned before)
+
+Add House >> Guestlist: UI for initial screen (dummy data for now)
+
+II. Not Ready for QA
+
+Add lockbox
+Home >> Search
+Home >> Maps
+Home >> Scheduler
+Home >> Favorites

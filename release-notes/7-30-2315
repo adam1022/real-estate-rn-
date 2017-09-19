@@ -1,0 +1,68 @@
+RELEASE NOTES:
+
+In addition to what's below, I've (seemingly) fixed the major  Navigation issue where app would act weird / crash if a user mashed a navigation button, triggering a fatal series of navigation actions. Please test.
+
+-----
+
+Splash/Login/Create Account/Onboarding/Walkthrough - Complete
+
+** No Jumio verification, just as a reminder
+
+-----
+
+Profile - UI Complete; Functionality works for My Lockboxes / My Homes / Edit Profile
+
+** No Screen in Sketch for Terms of Use
+
+-----
+
+Edit Profile - Complete (still issues w/ server for photos)
+
+-----
+
+My Homes - 90% Complete, including:
+
+1. Real-time updating after adding a house
+2. Being able to tap a house, edit, and/or delete
+
+Still to be completed:
+1. Functionality of Public / Private. I haven't implemented the "Make House Public" screen yet simply because there's no Sketch screen for it.
+2. Server integration
+
+-----
+
+Add House / Edit House - Functionality and UI for all of the following is Complete:
+
+1. Entire photo addition / editing / deleting process
+2. General Info
+3. Description
+4. Instructions
+5. Saving
+
+Lockbox: Not sure which screen goes here. Ambiguous in Sketch; will discuss this week.
+
+Make House Public: No Sketch screen for this.
+
+Guestlist: Not started. Will work on UI; functionality must be discussed, though.
+
+*** THINGS TO NOTE: Nothing is integrated with the server since I don't have endpoints for Houses (or Lockboxes) yet. Everything works locally, and will be saved properly until you:
+
+1) Logout
+2) Delete the app completely
+
+-----
+
+My Lockboxes:
+
+Can't really work on this until the BLE integration with the actual lockbox is complete. The UI is basic:
+
+- Render button when something happens (successful connection, not found)
+- Change to "Lockbox Open / Close" screen after successful connection / straight from "My Lockboxes"
+
+-----
+
+I have many questions, all of which I'll post to Trello.
+
+A major one, of which I'm sure you're aware, is:
+
+Are the Sketch wireframes accurate in depicting the different shades of black for the Navigation header? If so, I'll go ahead and clean that up.

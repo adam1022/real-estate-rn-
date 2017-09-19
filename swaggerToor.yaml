@@ -1,0 +1,728 @@
+swagger: "2.0"
+info:
+  description: "This represents all endpoints of the Toor API"
+  version: "1.0.0"
+  title: "Toor API"
+  contact:
+  email: "man@utilitynyc.com"
+  host: "toordev.herokuapp.com"
+#host: "api.toordev.com:3000"
+basePath: "/1.0"
+tags:
+- name: "auth"
+  description: "signin, signup, reset password, logout"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+- name: "user"
+  description: "edit profile, update photo"
+- name: "search"
+  description: "search, filter"
+- name: "device"
+  description: "device crud"
+- name: "listing"
+  description: "listing crud"
+  externalDocs:
+    description: "Find out more about our store"
+    url: "http://swagger.io"
+schemes:
+ - "https"
+#- "http"
+paths:
+  /auth/signup:
+    post:
+      tags:
+      - "auth"
+      summary: ""
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "full_name"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "email"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "password"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        400:
+          description: "Failed validation"
+  /auth/signin:
+    post:
+      tags:
+      - "auth"
+      summary: "Sign in user"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "email"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "password"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /auth/recover_password:
+    post:
+      tags:
+      - "auth"
+      summary: "Reset the user's password"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "email"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "Unauthorized"
+  /auth/signout:
+    delete:
+      tags:
+      - "auth"
+      summary: "Signs out user"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "token deleted"
+  /user/{userId}:
+    get:
+      tags:
+      - "user"
+      summary: "Gets user profile"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "userId"
+        type: "integer"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "profile fetched"
+  /user/:
+    put:
+      tags:
+      - "user"
+      summary: "Updates user profile"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "email"
+        type: "string"
+      - in: "query"
+        name: "location"
+        type: "string"
+      - in: "query"
+        name: "about"
+        type: "string"
+      - in: "query"
+        name: "full_name"
+        type: "string"
+      - in: "query"
+        name: "phone_number"
+        type: "string"
+      - in: "query"
+        name: "onboarded"
+        type: "string"
+      - in: "query"
+        name: "verified"
+        type: "string"
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "profile updated"
+        400:
+          description: "bad request"
+  /user/photo:
+    post:
+      tags:
+      - "user"
+      summary: "Updates user profile picture"
+      consumes:
+      - multipart/form-data
+      produces:
+      - "application/json"
+      parameters:
+      - in: formData
+        name: photo
+        type: file
+        description: The file to upload.
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "profile updated"
+        400:
+          description: "bad request"
+  /listing/all:
+    get:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "page"
+        type: "integer"
+        required: true
+      - in: "query"
+        name: "user_id"
+        type: "integer"
+      - in: "query"
+        name: "me"
+        type: "string"
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}:
+    get:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+    delete:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/general_information/:
+    post:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "price"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "num_bedrooms"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "num_bathrooms"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "square_feet"
+        type: "number"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}/general_information/:
+    put:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "query"
+        name: "price"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "num_bedrooms"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "num_bathrooms"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "square_feet"
+        type: "number"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}/description/:
+    put:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "query"
+        name: "headline"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "address"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "description"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}/instructions/:
+    put:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "query"
+        name: "instructions"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}/toggle-public/:
+    put:
+      tags:
+      - "listing"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /listing/{id}/photo/:
+    post:
+      tags:
+      - "listing"
+      summary: ""
+      consumes:
+      - multipart/form-data
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "id"
+        type: "integer"
+        required: true
+      - in: formData
+        name: photo
+        type: file
+        description: The file to upload.
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /search:
+    get:
+      tags:
+      - "search"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "latitude"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "longitude"
+        type: "number"
+        required: true
+      - in: "query"
+        name: "min_bedrooms"
+        type: "number"
+      - in: "query"
+        name: "max_bedrooms"
+        type: "number"
+      - in: "query"
+        name: "min_bathrooms"
+        type: "number"
+      - in: "query"
+        name: "max_bathrooms"
+        type: "number"
+      - in: "query"
+        name: "min_price"
+        type: "number"
+      - in: "query"
+        name: "max_price"
+        type: "number"
+      - in: "query"
+        name: "min_square_feet"
+        type: "number"
+      - in: "query"
+        name: "max_square_feet"
+        type: "number"
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"
+  /device:
+    post:
+      tags:
+      - "device"
+      summary: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "serial_number"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "mac_address"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "aes_key"
+        type: "string"
+        required: true
+      - in: "query"
+        name: "test_results"
+        type: "string"
+      - in: "query"
+        name: "production_location"
+        type: "string"
+      - in: "query"
+        name: "production_batch_number"
+        type: "string"
+      - in: "query"
+        name: "production_at"
+        type: "string"
+      - in: "header"
+        name: "User-Id"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Token"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Time"
+        type: "string"
+        required: true
+      - in: "header"
+        name: "Hash"
+        type: "string"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        401:
+          description: "bad request"

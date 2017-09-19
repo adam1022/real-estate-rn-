@@ -1,0 +1,33 @@
+ADDED:
+
+- houses sync to server, reload upon login; the following features are missing due to current endpoint constraints (Man said he'll have up and running tomorrow)
+
+1) retaining the public / private status of a listing
+2) photo integrity
+
+I'll be able to fix these tomorrow ones the API is working.
+
+- Live search for users in Guestlist
+1) Can't add page to actually link them to a house yet because of API constraints. Again, something that Man will address tomorrow.
+
+- UI for My Lockboxes is finished, using static data for the cards (battery level and color, key color, address)
+1) Can't hook these up to houses until API constraint is lifted
+2) Adding lockbox works dynamically, though. Add >> swipe back a few pages once on the Bluetooth screen >> you'll see new lockbox
+
+- Description page has keyboard-aware scrolling; user can scroll to bottom while keyboard is active
+
+------
+
+I. Ready for QA (not including anything under Complete in Trello)
+
+My Homes, UI and func aside from server-dependent functionality described above
+Add Homes, UI and func aside from server-dependent functionality described above (not Lockbox screen)
+Guestlist - UI and search functionality
+
+II. Not Ready for QA
+
+Add lockbox
+Home >> Search
+Home >> Maps
+Home >> Scheduler
+Home >> Favorites
